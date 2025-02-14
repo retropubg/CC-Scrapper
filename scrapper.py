@@ -1,6 +1,3 @@
-# Copyright (C) @TheSmartBisnu
-# Channel: https://t.me/itsSmartDev
-
 import re
 import os
 import asyncio
@@ -102,6 +99,10 @@ async def scr_cmd(client, message):
         await temporary_msg.delete()
         await client.send_message(message.chat.id, "<b>Sorry Bro ❌ No Credit Card Found</b>")
 
+# Start both clients asynchronously
+async def main():
+    await user.start()
+    await bot.start()
+
 if __name__ == "__main__":
-    user.start()
-    bot.run() 
+    asyncio.run(main())

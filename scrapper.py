@@ -19,7 +19,7 @@ bot = Client(
 user = Client(
     "user_session",
     session_string=SESSION_STRING,
-    workers=1000
+    workers=1  # Reduce the workers to avoid connection overload
 )
 
 scrape_queue = asyncio.Queue()
@@ -99,10 +99,19 @@ async def scr_cmd(client, message):
         await temporary_msg.delete()
         await client.send_message(message.chat.id, "<b>Sorry Bro ❌ No Credit Card Found</b>")
 
-# Start both clients asynchronously
+# Start both clients concurrently
 async def main():
-    await user.start()
-    await bot.start()
+    try:
+        # Start both user and bot clients
+        task_user = asyncio.create_task(user.start())
+        task_bot = asyncio.create_task(bot.start())
+        
+        # Await both tasks to complete
+        await asyncio.gather(task_user, task_bot)
+    except Exception as e:
+        print(f"Error starting clients: {e}")
+        return
 
 if __name__ == "__main__":
     asyncio.run(main())
+            

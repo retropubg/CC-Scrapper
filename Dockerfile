@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5000
 
 # Comando para ejecutar tu aplicación (dependiendo de tu framework)
-CMD ["python", "app.py"]
+CMD ["python", "scrapper.py"]
